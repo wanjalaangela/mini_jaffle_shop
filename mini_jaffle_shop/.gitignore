@@ -1,0 +1,12 @@
+
+target/
+dbt_packages/
+logs/
+
+jaffleenv/
+venv/
+.env/
+
+.DS_Store
+*.pyc
+__pycache__/

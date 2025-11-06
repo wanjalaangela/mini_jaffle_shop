@@ -1,0 +1,56 @@
+version: 2
+models:
+  - name: stg_customers
+    description: "Cleaned  and standardized customer data from raw_customers seed file"
+    columns:
+      - name: customer_id
+        description: "Unique ID for each customer"
+        tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "Customer first name"
+      - name: last_name
+        description: "Customer last name"
+  - name: stg_orders
+    description: "Cleaned order data from raw_orders seed file"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "Links to stg_customers.customer_id"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['completed', 'shipped', 'returned', 'pending', 'placed', 'return_pending']
+  - name: stg_payments
+    description: "Cleaned payments data from raw_payments seed file"
+    columns:
+      - name: payment_id
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      - name: amount_usd
+        description: "Payment amount converted from cents to USD"
+        tests:
+          - not_null
+
+
+
+
+
+
+

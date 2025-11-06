@@ -1,0 +1,22 @@
+version: 2
+models:
+  - name: dim_customers
+    description: "Dimension table containing customer and order history"
+    columns:
+      - name: customer_id
+        tests:
+          - unique
+          - not_null
+      - name: number_of_orders
+        description: "Total number of orders made by the customer"
+  - name: fct_orders
+    description: "Fact table for completed orders with total payment amounts"
+    columns:
+      - name: order_id
+        tests:
+          - unique
+          - not_null
+      - name: total_amount
+        description: "Total payment amount per order"
+        tests:
+          - not_null
